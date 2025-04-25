@@ -22,10 +22,20 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Set up OpenSCAD with logic to only download if not already present, with proper permissions
+# Set up OpenSCAD with architecture detection for x86_64 or ARM
 RUN if [ ! -f /usr/local/bin/openscad ]; then \
     echo "OpenSCAD not found, downloading..."; \
-    wget -q https://files.openscad.org/snapshots/OpenSCAD-2025.04.13.ai24871-x86_64.AppImage -O /usr/local/bin/openscad && \
+    ARCH=$(uname -m); \
+    if [ "$ARCH" = "x86_64" ]; then \
+        echo "Detected x86_64 architecture"; \
+        wget -q https://files.openscad.org/snapshots/OpenSCAD-2025.04.13.ai24871-x86_64.AppImage -O /usr/local/bin/openscad; \
+    elif [ "$ARCH" = "aarch64" ] || [ "$ARCH" = "arm64" ]; then \
+        echo "Detected ARM architecture"; \
+        wget -q https://files.openscad.org/snapshots/OpenSCAD-2023.09.11.ai-aarch64.AppImage -O /usr/local/bin/openscad; \
+    else \
+        echo "Unsupported architecture: $ARCH"; \
+        exit 1; \
+    fi; \
     chmod +x /usr/local/bin/openscad; \
 else \
     echo "OpenSCAD already present, ensuring permissions are set"; \

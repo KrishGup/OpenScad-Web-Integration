@@ -9,7 +9,7 @@ A web-based editor and renderer for OpenSCAD models using React for the frontend
 - Export models as STL files for 3D printing
 - Upload and use custom OpenSCAD libraries
 - Integration with actual OpenSCAD executable for accurate rendering
-- Cross-platform support (Windows and Linux)
+- Cross-platform support (Windows, Linux, and ARM-based systems)
 
 ## Architecture Overview
 
@@ -27,8 +27,8 @@ This application consists of two main components:
 │   ├── Dockerfile            # Docker configuration for the backend
 │   ├── requirements.txt      # Python dependencies
 │   ├── bin/                  # OpenSCAD binaries (not included in repository)
-│   │   ├── openscad.AppImage # Linux OpenSCAD binary (download separately)
-│   │   └── openscad.exe      # Windows OpenSCAD binary (download separately)
+│   │   ├── openscad.AppImage # Linux OpenSCAD binary (auto-downloaded when using Docker)
+│   │   └── openscad.exe      # Windows OpenSCAD binary (download separately for manual setup)
 │   └── libraries/            # Custom OpenSCAD libraries
 │       └── ub.scad           # Example library
 ├── public/                   # Static frontend assets
@@ -52,22 +52,19 @@ This application consists of two main components:
 
 ### Prerequisites
 
-- Node.js 18+ and npm
-- Python 3.10+ (for backend)
-- OpenSCAD (binaries need to be downloaded separately - see below)
+- For Docker setup (recommended):
+  - Docker and Docker Compose
+  
+- For manual setup:
+  - Node.js 18+ and npm
+  - Python 3.10+ with pip
+  - OpenSCAD (binaries need to be downloaded separately - see manual setup instructions)
 
-### Required OpenSCAD Binaries
+## Setup Options
 
-Due to GitHub file size limitations, the OpenSCAD binaries are not included in this repository. You need to download them separately:
+### Option 1: Using Docker (Recommended)
 
-1. Create a directory `api/bin` if it doesn't exist already
-2. Download the appropriate binary for your operating system:
-   - **Windows**: Download `openscad.exe` from the [OpenSCAD website](https://openscad.org/downloads.html) and place it in the `api/bin` directory
-   - **Linux**: Download the `openscad.AppImage` from the [OpenSCAD website](https://openscad.org/downloads.html), make it executable with `chmod +x openscad.AppImage`, and place it in the `api/bin` directory
-   
-   *Note for full functionality and support with third party libraries scroll down and select a [Snapshot Release](https://openscad.org/downloads.html#snapshots) as certain libraries make use of newer features not currently present in the latest 2021 full release.
-## If NOT using Docker
-### Setting Up and Running the Frontend
+Docker setup automatically handles all dependencies including the OpenSCAD binary download. You don't need to manually download or install OpenSCAD.
 
 1. Clone the repository:
    ```bash
@@ -75,19 +72,59 @@ Due to GitHub file size limitations, the OpenSCAD binaries are not included in t
    cd OpenScad-Web-Integration
    ```
 
-2. Install dependencies:
+2. Start the containers:
+   ```bash
+   docker-compose up frontend backend
+   ```
+
+3. Access the application:
+   - Development environment: http://localhost:5173
+   - Production build: http://localhost:80
+
+The Docker setup will automatically:
+- Download the appropriate OpenSCAD AppImage (x86_64 or ARM64 architecture)
+- Install all required dependencies
+- Configure the environment for proper rendering
+- Set up both frontend and backend services
+
+### Option 2: Manual Setup
+
+If you prefer not to use Docker, follow these instructions to set up the project manually.
+
+#### Required OpenSCAD Binaries for Manual Setup
+
+When setting up manually, you need to download the OpenSCAD binaries separately:
+
+1. Create a directory `api/bin` if it doesn't exist already
+2. Download the appropriate binary for your operating system:
+   - **Windows**: 
+     1. Download the installer (.exe) from the [OpenSCAD website](https://openscad.org/downloads.html)
+     2. Install OpenSCAD on your system
+     3. Locate the installed `openscad.exe` file (typically in `C:\Program Files\OpenSCAD\openscad.exe`)
+     4. Copy this file to the `api/bin` directory
+     
+   - **Linux**: 
+     1. Download the AppImage from the [OpenSCAD website](https://openscad.org/downloads.html#snapshots) 
+     2. Make it executable with `chmod +x openscad.AppImage`
+     3. Place it in the `api/bin` directory
+   
+   *Note: For full functionality and support with third party libraries, select a [Snapshot Release](https://openscad.org/downloads.html#snapshots) as certain libraries make use of newer features not currently present in the latest stable release.
+
+#### Setting Up and Running the Frontend Manually
+
+1. Install dependencies:
    ```bash
    npm install
    ```
 
-3. Start the development server:
+2. Start the development server:
    ```bash
    npm run dev
    ```
 
-4. Open http://localhost:5173 in your browser
+3. Open http://localhost:5173 in your browser
 
-### Setting Up and Running the Backend
+#### Setting Up and Running the Backend Manually
 
 1. Navigate to the API directory:
    ```bash
@@ -105,26 +142,12 @@ Due to GitHub file size limitations, the OpenSCAD binaries are not included in t
    pip install -r requirements.txt
    ```
 
-4. Download the OpenSCAD binaries as described in the "Required OpenSCAD Binaries" section above.
-
-5. Start the Flask API server:
+4. Start the Flask API server:
    ```bash
    python app.py
    ```
 
-6. The API will be available at http://localhost:5000
-
-### Using Docker
-
-The project includes Docker configuration for both development and production environments. Note that there are some known issues with the Docker setup that will be addressed in future updates.
-
-To start the containers (for reference only):
-
-```bash
-docker-compose up frontend backend
-```
-
-Important: If using Docker, you may still need to ensure the OpenSCAD binaries are present in the `api/bin` directory before building the Docker images.
+5. The API will be available at http://localhost:5000
 
 ## How It Works
 
