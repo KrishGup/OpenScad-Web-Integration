@@ -86,7 +86,7 @@ Due to GitHub file size limitations, the OpenSCAD binaries are not included in t
    ```
 
 4. Open http://localhost:5173 in your browser
-
+## If NOT using Docker
 ### Setting Up and Running the Backend
 
 1. Navigate to the API directory:
@@ -114,17 +114,17 @@ Due to GitHub file size limitations, the OpenSCAD binaries are not included in t
 
 6. The API will be available at http://localhost:5000
 
-### Using Docker (Note: Currently has some issues)
+### Using Docker
 
 The project includes Docker configuration for both development and production environments. Note that there are some known issues with the Docker setup that will be addressed in future updates.
 
 To start the containers (for reference only):
 
 ```bash
-docker-compose up
+docker-compose up frontend backend
 ```
 
-Important: If using Docker, you still need to ensure the OpenSCAD binaries are present in the `api/bin` directory before building the Docker images.
+Important: If using Docker, you may still need to ensure the OpenSCAD binaries are present in the `api/bin` directory before building the Docker images.
 
 ## How It Works
 
