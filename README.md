@@ -69,8 +69,8 @@ Due to GitHub file size limitations, the OpenSCAD binaries are not included in t
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/Openscad-Website-Integration.git
-   cd Openscad-Website-Integration
+   git clone https://github.com/KrishGup/OpenScad-Web-Integration.git
+   cd OpenScad-Web-Integration
    ```
 
 2. Install dependencies:
