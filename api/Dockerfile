@@ -16,16 +16,21 @@ RUN apt-get update && apt-get install -y \
     libxkbcommon-x11-0 \
     fuse \
     libfuse2 \
+    libharfbuzz0b \
+    libegl1 \
+    libopengl0 \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Download latest OpenSCAD snapshot (2025 development build)
-RUN mkdir -p /usr/local/bin/openscad && \
-    cd /tmp && \
-    wget -q https://files.openscad.org/snapshots/OpenSCAD-2025.04.13.ai24871-x86_64.AppImage && \
-    chmod +x OpenSCAD-2025.04.13.ai24871-x86_64.AppImage && \
-    mv OpenSCAD-2025.04.13.ai24871-x86_64.AppImage /usr/local/bin/openscad/openscad && \
-    ln -s /usr/local/bin/openscad/openscad /usr/local/bin/openscad
+# Set up OpenSCAD with logic to only download if not already present, with proper permissions
+RUN if [ ! -f /usr/local/bin/openscad ]; then \
+    echo "OpenSCAD not found, downloading..."; \
+    wget -q https://files.openscad.org/snapshots/OpenSCAD-2025.04.13.ai24871-x86_64.AppImage -O /usr/local/bin/openscad && \
+    chmod +x /usr/local/bin/openscad; \
+else \
+    echo "OpenSCAD already present, ensuring permissions are set"; \
+    chmod +x /usr/local/bin/openscad; \
+fi
 
 # Copy requirements and install dependencies
 COPY requirements.txt .

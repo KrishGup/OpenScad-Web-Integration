@@ -1,4 +1,3 @@
-version: '3.8'
 
 services:
   # Frontend development environment
@@ -31,6 +30,9 @@ services:
       # Ensure OpenSCAD binaries have execution permissions
       - ./api/bin:/app/bin:ro
     restart: unless-stopped
+    privileged: true
+    devices:
+      - /dev/fuse:/dev/fuse
 
   # Production build
   prod:
