@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  # Frontend development environment
+  frontend:
+    image: node:20-alpine
+    container_name: openscad-web-frontend
+    working_dir: /app
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/app
+      # Exclude node_modules from volume mount
+      - /app/node_modules
+    command: sh -c "npm install && npm run dev -- --host"
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - backend
+
+  # Backend API service
+  backend:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: openscad-web-backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./api:/app
+      # Ensure OpenSCAD binaries have execution permissions
+      - ./api/bin:/app/bin:ro
+    restart: unless-stopped
+
+  # Production build
+  prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: openscad-web-prod
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    depends_on:
+      - backend
