@@ -64,6 +64,8 @@ Due to GitHub file size limitations, the OpenSCAD binaries are not included in t
 2. Download the appropriate binary for your operating system:
    - **Windows**: Download `openscad.exe` from the [OpenSCAD website](https://openscad.org/downloads.html) and place it in the `api/bin` directory
    - **Linux**: Download the `openscad.AppImage` from the [OpenSCAD website](https://openscad.org/downloads.html), make it executable with `chmod +x openscad.AppImage`, and place it in the `api/bin` directory
+   
+   *Note for full functionality and support with third party libraries scroll down and select a [Snapshot Release](https://openscad.org/downloads.html#snapshots) as certain libraries make use of newer features not currently present in the latest 2021 full release.
 
 ### Setting Up and Running the Frontend
 
