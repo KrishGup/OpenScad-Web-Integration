@@ -53,7 +53,7 @@ This application consists of two main components:
 ### Prerequisites
 
 - For Docker setup (recommended):
-  - Docker and Docker Compose
+  - Docker and [Docker Compose](https://docs.docker.com/compose/install/)
   
 - For manual setup:
   - Node.js 18+ and npm
