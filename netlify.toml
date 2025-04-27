@@ -1,0 +1,7 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  # Change this to your deployed backend URL when you have it
+  VITE_API_URL = "https://your-app-name.fly.dev"
