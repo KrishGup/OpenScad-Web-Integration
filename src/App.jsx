@@ -64,8 +64,9 @@ function App() {
       const result = await openscadService.renderPreview(code);
       
       if (result.success) {
-        // Use the returned stlPath directly without modification
-        const stlUrl = `http://localhost:5000${result.stlPath}`;
+        // Get the base URL from environment variable or use localhost default
+        const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+        const stlUrl = `${baseUrl}${result.stlPath}`;
         console.log("Model URL set to:", stlUrl);
         setModelUrl(stlUrl);
       } else {

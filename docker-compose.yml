@@ -17,19 +17,19 @@ services:
     depends_on:
       - backend
 
-  # # Backend API service
-  # backend:
-  #   build:
-  #     context: ./api
-  #     dockerfile: Dockerfile
-  #   container_name: openscad-web-backend
-  #   ports:
-  #     - "5000:5000"
-  #   volumes:
-  #     - ./api:/app
-  #     # Ensure OpenSCAD binaries have execution permissions
-  #     - ./api/bin:/app/bin:ro
-  #   restart: unless-stopped
-  #   privileged: true
-  #   devices:
-  #     - /dev/fuse:/dev/fuse
+  # Backend API service
+  backend:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: openscad-web-backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./api:/app
+      # Ensure OpenSCAD binaries have execution permissions
+      - ./api/bin:/app/bin:ro
+    restart: unless-stopped
+    privileged: true
+    devices:
+      - /dev/fuse:/dev/fuse

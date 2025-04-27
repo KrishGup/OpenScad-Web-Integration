@@ -5,8 +5,10 @@
  * It provides methods for rendering OpenSCAD code and generating downloadable STL files.
  */
 
-// Base URL for the API backend - this should match the Flask server
-const BASE_URL = 'http://localhost:5000/api';
+// Base URL for the API backend - use environment variable if available, otherwise default to localhost
+const BASE_URL = import.meta.env.VITE_API_URL ? 
+  `${import.meta.env.VITE_API_URL}/api` : 
+  'http://localhost:5000/api';
 
 class OpenSCADService {
   constructor() {

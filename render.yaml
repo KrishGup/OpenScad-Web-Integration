@@ -1,0 +1,23 @@
+services:
+  # Backend API service
+  - type: web
+    name: openscad-web-backend
+    env: docker
+    dockerContext: ./api
+    dockerfilePath: ./api/Dockerfile
+    envVars:
+      - key: PORT
+        value: 5000
+    
+  # Frontend service
+  - type: web
+    name: openscad-web-frontend
+    env: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          type: web
+          name: openscad-web-backend
+          envVarKey: RENDER_EXTERNAL_URL
