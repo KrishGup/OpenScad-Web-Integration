@@ -33,15 +33,3 @@ services:
     privileged: true
     devices:
       - /dev/fuse:/dev/fuse
-
-  # Production build
-  prod:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: openscad-web-prod
-    ports:
-      - "80:80"
-    restart: unless-stopped
-    depends_on:
-      - backend
