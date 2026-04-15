@@ -5,8 +5,9 @@
  * It provides methods for rendering OpenSCAD code and generating downloadable STL files.
  */
 
-// Base URL for the API backend - this should match the Flask server
-const BASE_URL = 'http://localhost:5000/api';
+// Default to a same-origin API path so Vite/Nginx proxying can route requests.
+// Override with VITE_API_BASE_URL when needed.
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || '/api';
 
 class OpenSCADService {
   constructor() {

@@ -64,8 +64,8 @@ function App() {
       const result = await openscadService.renderPreview(code);
       
       if (result.success) {
-        // Use the returned stlPath directly without modification
-        const stlUrl = `http://localhost:5000${result.stlPath}`;
+        // Resolve API path to a fully usable URL for the current environment
+        const stlUrl = openscadService.getFullUrl(result.stlPath);
         console.log("Model URL set to:", stlUrl);
         setModelUrl(stlUrl);
       } else {

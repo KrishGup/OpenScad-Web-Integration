@@ -6,7 +6,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     wget \
     xvfb \
-    libgl1-mesa-glx \
+    libgl1 \
     libfontconfig1 \
     libx11-xcb1 \
     libdbus-1-3 \
@@ -15,7 +15,9 @@ RUN apt-get update && apt-get install -y \
     libxkbcommon0 \
     libxkbcommon-x11-0 \
     fuse \
-    libfuse2 \
+    libfuse2t64 \
+    libcom-err2 \
+    libgpg-error0 \
     libharfbuzz0b \
     libegl1 \
     libopengl0 \
